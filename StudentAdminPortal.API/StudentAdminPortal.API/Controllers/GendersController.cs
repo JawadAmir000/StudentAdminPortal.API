@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using StudentAdminPortal.API.DataModels;
 using StudentAdminPortal.API.Repositories;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,24 +9,29 @@ using System.Threading.Tasks;
 namespace StudentAdminPortal.API.Controllers
 {
     [ApiController]
-    public class StudentController : Controller
+    public class GendersController : Controller
     {
         private readonly IStudentRepository studentRepository;
         private readonly IMapper mapper;
-        public StudentController(IStudentRepository studentRepository, IMapper maper)
+
+        public GendersController(IStudentRepository studentRepository, IMapper mapper)
         {
             this.studentRepository = studentRepository;
-            this.mapper = maper;
+            this.mapper = mapper;
         }
 
         [HttpGet]
         [Route("[controller]")]
-        public async Task<IActionResult> GetAllStudentsAsync()
+        public async Task<IActionResult> GetAllGenders()
         {
-           var students = await studentRepository.GetStudentsAsync();
+            var genderList = await studentRepository.GetGendersAsync();
 
-           return Ok(mapper.Map<List<Student>>(students));
+            if (genderList == null || !genderList.Any())
+            {
+                return NotFound();
+            }
 
+            return Ok(mapper.Map<List<Gender>>(genderList));
         }
     }
 }

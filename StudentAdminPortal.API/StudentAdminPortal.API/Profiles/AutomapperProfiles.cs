@@ -1,26 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using StudentAdminPortal.API.Domain_Models;
+﻿using AutoMapper;
+using StudentAdminPortal.API.DataModels;
+using StudentAdminPortal.API.DomainModels;
+using StudentAdminPortal.API.Profiles.AfterMaps;
 using DataModels = StudentAdminPortal.API.DataModels;
-
 
 namespace StudentAdminPortal.API.Profiles
 {
-    public class AutomapperProfiles : Profile
+    public class AutoMapperProfiles : Profile
     {
-        public AutomapperProfiles()
+        public AutoMapperProfiles()
         {
             CreateMap<DataModels.Student, Student>()
                 .ReverseMap();
 
-            CreateMap<DataModels.Student, Student>()
+            CreateMap<DataModels.Gender, Gender>()
                 .ReverseMap();
 
-            CreateMap<DataModels.Student, Student>()
+            CreateMap<DataModels.Address, Address>()
                 .ReverseMap();
+
+            CreateMap<UpdateStudentRequest, DataModels.Student>()
+                .AfterMap<UpdateStudentRequestAfterMap>();
+
         }
     }
 }
